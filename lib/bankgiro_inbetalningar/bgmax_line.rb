@@ -14,7 +14,7 @@ module BankgiroInbetalningar
           when 'N:h0', 'N:-'
             value.sub(/^0+/,'').to_i
           else
-            value
+            value.strip
           end
         end
       end
