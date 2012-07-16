@@ -97,6 +97,14 @@ module BankgiroInbetalningar
     end
   end
 
+  class Tk25 < BgmaxLine
+    field :text, 3..52, 'A:-'
+    def update(result)
+      payment = result.payment
+      payment.text = [payment.text, text].compact.join("\n")
+    end
+  end
+
   class Tk26 < BgmaxLine
     field :name, 3..37, 'A:vb'
     field :extra_name, 38..72, 'A:vb'
@@ -178,7 +186,7 @@ module BankgiroInbetalningar
     end
 
     class Payment
-      attr_accessor :cents, :references, :currency, :raw, :payer, :sender_bgno
+      attr_accessor :cents, :references, :currency, :raw, :payer, :sender_bgno, :text
       def initialize
         @references = []
         @raw = "".force_encoding('iso-8859-1')

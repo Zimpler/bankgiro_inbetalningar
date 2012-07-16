@@ -44,10 +44,13 @@ module BankgiroInbetalningar
         end
       end
 
-      context "OCR payment with several references" do
+      context "OCR payment with several references and text" do
         let(:payment) { result.payments[0] }
         it "has four references" do
           payment.references.should =~ %w[665869 657775 665661 665760]
+        end
+        it "has text" do
+          payment.text.should == "Betalning med extra refnr 665869 657775 665661\n665760"
         end
       end
 
