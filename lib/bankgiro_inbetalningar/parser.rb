@@ -170,12 +170,34 @@ module BankgiroInbetalningar
     end
   end
 
+  class Tk70 < BgmaxLine
+    field :payments_count, 3..10, 'N:h0'
+    field :deposits_count, 27..34, 'N:h0'
+
+    def update(result)
+      result.valid = true
+      unless result.payments.count == payments_count
+        result.valid = false
+        result.errors << "Found #{result.payments.count} payments but expected #{payments_count}"
+      end
+      unless result.deposits.count == deposits_count
+        result.valid = false
+        result.errors << "Found #{result.deposits.count} deposits but expected #{deposits_count}"
+      end
+    end
+  end
+
 
   class Result
-    attr_accessor :timestamp, :deposits
+    attr_accessor :timestamp, :deposits, :valid, :errors
 
     def initialize
       @deposits = []
+      @errors = []
+    end
+
+    def valid?
+      valid
     end
 
     def new_deposit

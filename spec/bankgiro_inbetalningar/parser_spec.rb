@@ -7,6 +7,10 @@ module BankgiroInbetalningar
       let(:parser) { Parser.new(fixture_path('BgMaxfil4.txt')) }
       let(:result) { parser.run ; parser.result }
 
+      it "returns valid results" do
+        result.should be_valid
+      end
+
       it "finds 4 deposits" do
         result.deposits.count.should == 4
       end
@@ -64,6 +68,22 @@ module BankgiroInbetalningar
         end
       end
 
+    end
+    context "parsing a broken sample file 4" do
+      let(:parser) { Parser.new(fixture_path('BgMaxfil4_broken.txt')) }
+      let(:result) { parser.run ; parser.result }
+
+      it "returns invalid results" do
+        result.should_not be_valid
+      end
+
+      it "reports the payments count as being off" do
+        result.errors.should include("Found 9 payments but expected 8")
+      end
+
+      it "reports the deposits count as being off" do
+        result.errors.should include("Found 4 deposits but expected 5")
+      end
     end
   end
 end
