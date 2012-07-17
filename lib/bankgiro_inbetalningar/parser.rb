@@ -42,9 +42,13 @@ module BankgiroInbetalningar
     end
 
     def record_line
-      if result.deposit && result.payment && @line[0] == '2'
+      if result.deposit && result.payment && payment_line?
         result.payment.raw << @line
       end
+    end
+
+    def payment_line?
+      @line[0] == '2'
     end
   end
 
@@ -82,7 +86,7 @@ module BankgiroInbetalningar
       payment = result.new_payment
       payment.cents = cents
       payment.currency = result.deposit.currency
-      payment.references << reference.strip if reference_type == 2
+      payment.references << reference if reference_type == 2
       payment.sender_bgno = sender_bgno
     end
   end
