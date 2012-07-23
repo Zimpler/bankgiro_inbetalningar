@@ -106,6 +106,7 @@ module BankgiroInbetalningar
       payment.currency = result.deposit.currency
       payment.references << reference if reference_type == 2
       payment.sender_bgno = sender_bgno
+      payment.number = number
     end
   end
 
@@ -230,7 +231,7 @@ module BankgiroInbetalningar
     end
 
     class Payment
-      attr_accessor :cents, :references, :currency, :raw, :payer, :sender_bgno, :text, :date
+      attr_accessor :cents, :references, :currency, :raw, :payer, :sender_bgno, :text, :date, :number
       def initialize
         @references = []
         @raw = "".force_encoding('iso-8859-1')

@@ -29,6 +29,9 @@ module BankgiroInbetalningar
         it "has a date" do
           payment.date.should == Date.civil(2004,5,25)
         end
+        it "has a number" do
+          payment.number.should == "000000000023"
+        end
       end
 
       context "simple OCR payment with address" do
