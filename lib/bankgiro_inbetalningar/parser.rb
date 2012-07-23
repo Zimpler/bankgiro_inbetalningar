@@ -1,3 +1,5 @@
+require 'date'
+
 module BankgiroInbetalningar
   class Parser
     attr_accessor :result
@@ -71,6 +73,22 @@ module BankgiroInbetalningar
       result.new_deposit
       result.deposit.bgno = bgno
       result.deposit.currency = currency
+    end
+  end
+
+  class Tk15 < BgmaxLine
+    field :deposit_account, 3..37, 'N:h0'
+    field :date, 38..45, 'N:-'
+    field :date_year, 38..41, 'N:-'
+    field :date_month, 42..43, 'N:h0'
+    field :date_day, 44..45, 'N:h0'
+    field :deposit_no, 46..50, 'N:h0'
+    field :cents, 51..68, 'N:h0'
+
+    def update(result)
+      deposit = result.deposit
+      deposit.date = Date.new(date_year, date_month, date_day)
+      deposit.payments.each { |p| p.date = deposit.date }
     end
   end
 
@@ -183,14 +201,14 @@ module BankgiroInbetalningar
     end
 
     class Deposit
-      attr_accessor :bgno, :currency, :payments
+      attr_accessor :bgno, :currency, :payments, :date
       def initialize
         @payments = []
       end
     end
 
     class Payment
-      attr_accessor :cents, :references, :currency, :raw, :payer, :sender_bgno, :text
+      attr_accessor :cents, :references, :currency, :raw, :payer, :sender_bgno, :text, :date
       def initialize
         @references = []
         @raw = "".force_encoding('iso-8859-1')

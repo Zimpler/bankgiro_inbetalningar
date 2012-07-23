@@ -22,6 +22,9 @@ module BankgiroInbetalningar
           payment.cents.should == 500_00
           payment.raw.should == "200000000000                   535765000000000000050000230000000000230          \r\n"
         end
+        it "has a date" do
+          payment.date.should == Date.civil(2004,5,25)
+        end
       end
 
       context "simple OCR payment with address" do
