@@ -24,6 +24,10 @@ Use the convenience method `BankgiroInbetalningar.parse` to parse a file:
 
 ```ruby
 res = BankgiroInbetalningar.parse('BgMaxfil4.txt')
+# Or
+data = File.read("BgMaxfil4.txt")
+res = BankgiroInbetalningar.parse_data(data)
+
 raise "oops" unless res.valid?
 # You can process deposit by deposit...
 res.deposits.each do |d|

@@ -4,7 +4,8 @@ require_relative '../spec_helper'
 module BankgiroInbetalningar
   describe Parser do
     context "parsing sample file 4" do
-      let(:parser) { Parser.new(fixture_path('BgMaxfil4.txt')) }
+      let(:data) { File.read(fixture_path('BgMaxfil4.txt')) }
+      let(:parser) { Parser.new(data) }
       let(:result) { parser.run ; parser.result }
 
       it "returns valid results" do
@@ -73,7 +74,8 @@ module BankgiroInbetalningar
 
     end
     context "parsing a broken sample file 4" do
-      let(:parser) { Parser.new(fixture_path('BgMaxfil4_broken.txt')) }
+      let(:data) { File.read(fixture_path('BgMaxfil4_broken.txt')) }
+      let(:parser) { Parser.new(data) }
       let(:result) { parser.run ; parser.result }
 
       it "returns invalid results" do

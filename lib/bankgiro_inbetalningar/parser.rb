@@ -4,30 +4,21 @@ module BankgiroInbetalningar
   class Parser
     attr_accessor :result
 
-    def initialize(filename)
-      @filename = filename
+    def initialize(data)
+      @raw_data ||= data.encode('utf-8', 'iso-8859-1')
     end
 
     def run
       @result = Result.new
       parse_lines
-    ensure
-      @stream.close if @stream
     end
 
     def parse_lines
-      while @line = next_line
+      @raw_data.each_line do |line|
+        @line = line
         parse_line
         record_line
       end
-    end
-
-    def next_line
-      stream.eof? ? nil : stream.readline
-    end
-
-    def stream
-      @stream ||= File.open(@filename, 'r:ISO-8859-1:UTF-8')
     end
 
     def parse_line
@@ -220,7 +211,7 @@ module BankgiroInbetalningar
     end
 
     def payments
-      deposits.map { |d| d.payments }.flatten
+      deposits.map(&:payments).flatten
     end
 
     class Deposit
