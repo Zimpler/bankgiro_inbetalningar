@@ -66,3 +66,9 @@ I'll be happy to add them if you don't want to do it yourself.
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+### Contributors:
+
+* [David Vrensk](https://github.com/dvrensk)
+* [Petter Remen](https://github.com/remen)
+* [Henrik Nyh](https://github.com/henrik)
