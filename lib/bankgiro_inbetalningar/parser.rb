@@ -4,27 +4,21 @@ module BankgiroInbetalningar
   class Parser
     attr_accessor :result
 
-    def initialize(filename)
-      @filename = filename
+    def initialize(data)
+      @raw_data ||= data.encode('utf-8', 'iso-8859-1')
     end
 
     def run
       @result = Result.new
       parse_lines
-    ensure
-      @stream.close if @stream
     end
 
     def parse_lines
-      stream.each_line do |line|
+      @raw_data.each_line do |line|
         @line = line
         parse_line
         record_line
       end
-    end
-
-    def stream
-      @stream ||= File.open(@filename, 'r:ISO-8859-1:UTF-8')
     end
 
     def parse_line

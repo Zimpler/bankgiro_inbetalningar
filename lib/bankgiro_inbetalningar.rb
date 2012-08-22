@@ -4,7 +4,12 @@ require "bankgiro_inbetalningar/parser"
 
 module BankgiroInbetalningar
   def self.parse(filename)
-    parser = Parser.new(filename)
+    data = File.read(filename)
+    parse_data(data)
+  end
+
+  def self.parse_data(data)
+    parser = Parser.new(data)
     parser.run
     parser.result
   end
