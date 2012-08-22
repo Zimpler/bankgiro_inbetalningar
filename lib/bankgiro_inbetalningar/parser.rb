@@ -16,14 +16,11 @@ module BankgiroInbetalningar
     end
 
     def parse_lines
-      while @line = next_line
+      stream.each_line do |line|
+        @line = line
         parse_line
         record_line
       end
-    end
-
-    def next_line
-      stream.eof? ? nil : stream.readline
     end
 
     def stream
@@ -220,7 +217,7 @@ module BankgiroInbetalningar
     end
 
     def payments
-      deposits.map { |d| d.payments }.flatten
+      deposits.map(&:payments).flatten
     end
 
     class Deposit
