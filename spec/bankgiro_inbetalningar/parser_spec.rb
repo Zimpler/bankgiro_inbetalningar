@@ -4,9 +4,17 @@ require_relative '../spec_helper'
 module BankgiroInbetalningar
   describe Parser do
     context "parsing sample file 4" do
-      let(:data) { File.read(fixture_path('BgMaxfil4.txt')) }
+      let(:data) { data_from_file('BgMaxfil4.txt') }
       let(:parser) { Parser.new(data) }
       let(:result) { parser.run ; parser.result }
+
+      context "with non Latin-1 data" do
+        let(:data) { data_from_file('BgMaxfil4.txt').encode("UTF-8") }
+
+        it "handles that fine" do
+          result.payments[1].payer.name.should include "Olles färg"
+        end
+      end
 
       it "returns valid results" do
         result.should be_valid
@@ -74,7 +82,7 @@ module BankgiroInbetalningar
 
     end
     context "parsing a broken sample file 4" do
-      let(:data) { File.read(fixture_path('BgMaxfil4_broken.txt')) }
+      let(:data) { data_from_file('BgMaxfil4_broken.txt') }
       let(:parser) { Parser.new(data) }
       let(:result) { parser.run ; parser.result }
 
