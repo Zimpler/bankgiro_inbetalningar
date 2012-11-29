@@ -4,7 +4,7 @@ require "bankgiro_inbetalningar/parser"
 
 module BankgiroInbetalningar
   def self.parse(filename)
-    data = File.read(filename)
+    data = File.read(filename).force_encoding("ISO-8859-1")
     parse_data(data)
   end
 

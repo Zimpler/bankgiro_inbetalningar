@@ -5,7 +5,7 @@ module BankgiroInbetalningar
     attr_accessor :result
 
     def initialize(data)
-      @raw_data ||= data.encode('utf-8', 'iso-8859-1')
+      @raw_data ||= data.encode("UTF-8")
     end
 
     def run

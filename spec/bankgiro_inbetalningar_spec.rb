@@ -18,7 +18,7 @@ end
 
 describe BankgiroInbetalningar, ".parse_data" do
   context "parsing a minimal file" do
-    let(:data) { File.read(fixture_path('minimal.txt')) }
+    let(:data) { data_from_file('minimal.txt') }
     subject { BankgiroInbetalningar.parse_data(data) }
 
     it "finds the timestamp" do
