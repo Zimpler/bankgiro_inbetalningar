@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["david@vrensk.com"]
   gem.description   = %q{Parse BgMax transaction files from Bankgirot and return a simple data structure}
   gem.summary       = %q{Bankgirot has changed its file format, making the +rbankgiro+ gem unusable for new clients.}
-  gem.homepage      = "https://github.com/spnab/bankgiro_inbetalningar"
+  gem.homepage      = "https://github.com/PugglePay/bankgiro_inbetalningar"
 
   gem.add_development_dependency "rspec", '~> 2.9.0'
 
