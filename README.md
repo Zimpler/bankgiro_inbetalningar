@@ -23,9 +23,9 @@ Or install it yourself as:
 Use the convenience method `BankgiroInbetalningar.parse` to parse a file:
 
 ```ruby
-res = BankgiroInbetalningar.parse('BgMaxfil4.txt')
+res = BankgiroInbetalningar.parse("BgMaxfil4.txt")
 # Or
-data = File.read("BgMaxfil4.txt")
+data = File.read("BgMaxfil4.txt").force_encoding("ISO-8859-1")
 res = BankgiroInbetalningar.parse_data(data)
 
 raise "oops" unless res.valid?
@@ -44,8 +44,11 @@ res.payments.each do |p|
 end
 ```
 
-See the specs for more details.  Note that all text is in UTF-8, as it should be,
-and not in ISO-8859-1 as Bankgirot prefers.  It is the 21st century.
+See the specs for more details.
+
+Files are expected to be ISO-8859-1 (as Bankgirot prefers), but data strings
+can be in any encoding, as long as `String#encoding` is correct. The library
+returns UTF-8. It *is* the 21st century.
 
 ## Todo / Missing features
 
