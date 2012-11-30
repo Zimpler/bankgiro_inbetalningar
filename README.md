@@ -66,10 +66,12 @@ Files are expected to be ISO-8859-1 (as Bankgirot prefers), but data strings
 can be in any encoding, as long as `String#encoding` is correct. The library
 returns UTF-8. It *is* the 21st century.
 
-## Changes
+## Changes in 1.2.0
 
-The methods `parse_file` and `parse_string` are also available under their
-old names `parse` and `parse_data`.
+* Renamed `parse` and `parse_data` to `parse_file` and `parse_string`.  The old
+  method names are still available.
+* `parse_string` accepts a string in any encoding that can be converted to UTF-8.
+* Added `BankgiroInbetalningar::Result::Deposit#raw`.
 
 ## Todo / Missing features
 
