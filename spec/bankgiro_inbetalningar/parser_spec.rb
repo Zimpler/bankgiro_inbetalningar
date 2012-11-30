@@ -33,13 +33,16 @@ module BankgiroInbetalningar
           payment.references.should == ['535765']
           payment.currency.should == 'SEK'
           payment.cents.should == 500_00
-          payment.raw.should == "200000000000                   535765000000000000050000230000000000230          \r\n"
         end
         it "has a date" do
           payment.date.should == Date.civil(2004,5,25)
         end
         it "has a number" do
           payment.number.should == "000000000023"
+        end
+        it "stores the raw data" do
+          payment.raw.should == "200000000000                   535765000000000000050000230000000000230          \r\n"
+          result.deposits[3].raw.split(/\r\n/).should == data.encode('utf-8').split(/\r\n/)[50..65]
         end
       end
 

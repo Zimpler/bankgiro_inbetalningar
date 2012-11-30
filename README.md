@@ -59,6 +59,7 @@ payment_1.currency # => "SEK"
 payment_2.currency # => nil
 ```
 
+The `raw` method is also available on deposit objects.
 See the specs for more details.
 
 Files are expected to be ISO-8859-1 (as Bankgirot prefers), but data strings

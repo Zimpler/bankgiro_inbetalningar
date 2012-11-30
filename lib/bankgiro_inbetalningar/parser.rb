@@ -35,9 +35,16 @@ module BankgiroInbetalningar
     end
 
     def record_line
+      if result.deposit && deposit_line?
+        result.deposit.raw << @line
+      end
       if result.deposit && result.payment && payment_line?
         result.payment.raw << @line
       end
+    end
+
+    def deposit_line?
+      payment_line? || %w(05 15).include?(@line[0..1])
     end
 
     def payment_line?
@@ -215,9 +222,10 @@ module BankgiroInbetalningar
     end
 
     class Deposit
-      attr_accessor :bgno, :currency, :payments, :date
+      attr_accessor :bgno, :currency, :payments, :date, :raw
       def initialize
         @payments = []
+        @raw = ""
       end
     end
 
@@ -225,7 +233,7 @@ module BankgiroInbetalningar
       attr_accessor :cents, :references, :currency, :raw, :payer, :sender_bgno, :text, :date, :number
       def initialize
         @references = []
-        @raw = "".force_encoding('iso-8859-1')
+        @raw = ""
       end
 
       def payer!
