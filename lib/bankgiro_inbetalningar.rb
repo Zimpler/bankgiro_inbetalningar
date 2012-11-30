@@ -13,4 +13,9 @@ module BankgiroInbetalningar
     parser.run
     parser.result
   end
+
+  class << self
+    alias parse_file parse
+    alias parse_string parse_data
+  end
 end

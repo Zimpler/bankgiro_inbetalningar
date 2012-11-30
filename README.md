@@ -20,14 +20,14 @@ Or install it yourself as:
 
 ## Usage
 
-Use the convenience method `BankgiroInbetalningar.parse` to parse a file
-or `BankgiroInbetalningar.parse_data` to parse a string:
+Use the convenience method `BankgiroInbetalningar.parse_file` to parse a file
+or `BankgiroInbetalningar.parse_string` to parse a string:
 
 ```ruby
-res = BankgiroInbetalningar.parse("BgMaxfil4.txt")
+res = BankgiroInbetalningar.parse_file("BgMaxfil4.txt")
 # Or
 data = File.read("BgMaxfil4.txt").force_encoding("ISO-8859-1")
-res = BankgiroInbetalningar.parse_data(data)
+res = BankgiroInbetalningar.parse_string(data)
 
 raise "oops" unless res.valid?
 # You can process deposit by deposit...
@@ -50,13 +50,13 @@ the raw data along with each deposit or payment in a database.  Note that the
 currency name only is available in the deposit:
 
 ```ruby
-payment_1 = BankgiroInbetalningar.parse("BgMaxfil4.txt").payments.first
-payment_2 = BankgiroInbetalningar.parse_data(payment_1.raw).payments.first
+Dir.chdir 'spec/fixtures'
+payment_1 = BankgiroInbetalningar.parse_file("BgMaxfil4.txt").payments.first
+payment_2 = BankgiroInbetalningar.parse_string(payment_1.raw).payments.first
 payment_1.cents    # => 180000
 payment_2.cents    # => 180000
 payment_1.currency # => "SEK"
 payment_2.currency # => nil
-
 ```
 
 See the specs for more details.
@@ -64,6 +64,11 @@ See the specs for more details.
 Files are expected to be ISO-8859-1 (as Bankgirot prefers), but data strings
 can be in any encoding, as long as `String#encoding` is correct. The library
 returns UTF-8. It *is* the 21st century.
+
+## Changes
+
+The methods `parse_file` and `parse_string` are also available under their
+old names `parse` and `parse_data`.
 
 ## Todo / Missing features
 
