@@ -202,7 +202,7 @@ module BankgiroInbetalningar
     end
 
     def new_payment
-      deposit.payments << Payment.new
+      (deposit || new_deposit).payments << Payment.new
       payment
     end
 

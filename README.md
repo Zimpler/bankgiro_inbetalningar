@@ -20,7 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
-Use the convenience method `BankgiroInbetalningar.parse` to parse a file:
+Use the convenience method `BankgiroInbetalningar.parse` to parse a file
+or `BankgiroInbetalningar.parse_data` to parse a string:
 
 ```ruby
 res = BankgiroInbetalningar.parse("BgMaxfil4.txt")
@@ -42,6 +43,20 @@ res.payments.each do |p|
   puts "%10.2f %s" % [(p.cents / 100.0), p.currency]
   puts "From #{p.payer.name}, #{p.payer.city}" if p.payer
 end
+```
+
+You can also parse isolated deposits or payments which is useful if you store
+the raw data along with each deposit or payment in a database.  Note that the
+currency name only is available in the deposit:
+
+```ruby
+payment_1 = BankgiroInbetalningar.parse("BgMaxfil4.txt").payments.first
+payment_2 = BankgiroInbetalningar.parse_data(payment_1.raw).payments.first
+payment_1.cents    # => 180000
+payment_2.cents    # => 180000
+payment_1.currency # => "SEK"
+payment_2.currency # => nil
+
 ```
 
 See the specs for more details.
